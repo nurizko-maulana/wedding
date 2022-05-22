@@ -1,4 +1,5 @@
-// import Script from 'next/script'
+import React from 'react';
+import ReactHowler from 'react-howler';
 import Head from 'next/head';
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
@@ -14,6 +15,10 @@ import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 
 import DisqusComments from '@/components/DisqusComments';
+
+import Sound from 'react-sound';
+
+// import growOld from '../assets/sound/i-wanna-grow-old-with-you.mp3';
 
 const photos = [
   {
@@ -57,26 +62,75 @@ export default function Home() {
     setViewerIsOpen(false);
   };
 
+  //Howler Audio
+
+  let audioRef = React.useRef(null);
+
+  const [paused, setPauseStatus] = React.useState(true);
+  const handlePlay = () => {
+    console.log(`handlePlay`);
+  };
+  const handlePause = () => {
+    console.log(`handlePause`);
+  };
+  const handleStop = () => {
+    console.log(`handleStop`);
+  };
+
+  const handlePauseButtonClick = () => {
+    //console.log(`handlePauseButtonClick`, audioRef.current);
+
+    audioRef.current.pause();
+    console.log(audioRef.current.howlerState());
+
+    // setPauseStatus(true);
+  };
+  const handlePayButtonClick = () => {
+    //audioRef.current.load();
+
+    //console.log(`handlePayButtonClick`, audioRef.current);
+
+    audioRef.current.play();
+    console.log(audioRef.current.howlerState());
+
+    //setPauseStatus(false);
+  };
+  const handleOnLoad = () => {
+    console.log(`handleOnLoad`);
+    console.log(audioRef.current.howlerState());
+  };
+  const onLoadError = (err) => {
+    console.log(`onLoadError`, err);
+  };
+
   return (
     <div>
       <Head>
-        <title>Wedding Invitation</title>
+        <title>Adhimas & Endah</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
         {/* Header Mobile */}
         <section
           id="beranda"
-          className="flex lg:hidden bg-cover bg-center  w-full h-screen  items-start "
+          className="flex items-center lg:hidden bg-cover bg-center  w-full h-screen "
           style={{ backgroundImage: 'url(/assets/endah-138.jpg)' }}
         >
-          <div className="flex flex-col  w-full relative">
-            <div className="absolute h-full w-full bg-gradient-to-b from-dark-500 to-dark-100 bg-blur-2px"></div>
+          <div className="flex flex-col w-full relative">
+            <div className=" h-full w-full bg-gradient-to-b from-dark-500 to-dark-100 bg-blur-2px"></div>
             <div className="flex flex-col w-full text-white text-center h-auto  px-8 py-3.5 z-10">
               <h4 className="font-great-vibes text-5xl mb-4 mt-6">
                 Adhimas & Endah
               </h4>
               <p className="font-habibi -mt-4">10 Maret 2022</p>
+              <a href="#resepsi">
+                <button
+                  className="mt-6 bg-dark-450 hover:bg-dark-500 text-white font-bold py-2 px-4 rounded-full"
+                  onClick={handlePayButtonClick}
+                >
+                  Buka Undangan
+                </button>
+              </a>
             </div>
           </div>
         </section>
@@ -134,7 +188,7 @@ export default function Home() {
             <div className="flex flex-col w-1/2 text-center px-2 break-words">
               <p>Putra pertama dari</p>
               <p>Bapak ADMO SUDIBYO</p>
-              <p>Ibu VIOLITHA NINGSIH ( ALM )</p>
+              <p>Ibu VIOLITHA NINGSIH (ALM)</p>
             </div>
             <div className="flex flex-col w-1/2 text-center px-2 break-words ">
               <p>Putri pertama dari</p>
@@ -181,9 +235,6 @@ export default function Home() {
               Lokasi
             </button>
           </div>
-          <p className="md:block mb-5 -mt-5 lg:mt-auto mx-auto text-center text-lg text-white font-habibi">
-            Bertempat di mempelai wanita, Perum permata hijau Blok F no 45
-          </p>
 
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d368.1709704585785!2d103.39618241611362!3d1.023559793158446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d75b741c9bf92d%3A0xc6050987ce67b1b5!2sGedung%20Paguyuban%20Jawa%20Among%20Mitro!5e0!3m2!1sen!2sid!4v1649968315313!5m2!1sen!2sid"
@@ -199,64 +250,8 @@ export default function Home() {
           <h1 className="col-span-2  text-5xl font-great-vibes my-auto mx-auto text-white lg:hidden">
             Gallery
           </h1>
-          {/* <SRLWrapper>
-            <div className="flex row-span-4 ">
-              <Image
-                src="/assets/gallery-mobile/photo-1.jpg"
-                alt="Picture of the author"
-                width={500}
-                height={500}
-                objectFit="cover"
-                quality={100}
-                loading="lazy"
-              />
-            </div>
-            <div className="flex  row-start-5 col-start-2 row-span-4 lg:row-span-5 bg-white">
-              <Image
-                src="/assets/gallery-mobile/photo-2.jpg"
-                alt="Picture of the author"
-                width={500}
-                height={500}
-                objectFit="cover"
-                quality={100}
-                loading="lazy"
-              />
-            </div>
-            <div className="flex row-span-3 col-start-2 lg:col-start-3 row-start-2  lg:row-span-2">
-              <Image
-                src="/assets/gallery-mobile/photo-3.jpg"
-                alt="Picture of the author"
-                width={500}
-                height={500}
-                objectFit="cover"
-                quality={100}
-                loading="lazy"
-              />
-            </div>
-            <div className="flex row-span-6 lg:row-span-3">
-              <Image
-                src="/assets/gallery-mobile/photo-4.jpg"
-                alt="Picture of the author"
-                width={500}
-                height={500}
-                objectFit="cover"
-                quality={100}
-                loading="lazy"
-              />
-            </div>
-            <div className="flex row-span-9 lg:row-span-2 col-span-2 lg:col-span-1 w-full relative">
-              <Image
-                src="/assets/gallery-mobile/photo-5.jpg"
-                alt="Picture of the author"
-                layout="fill"
-                objectFit="cover"
-                quality={100}
-                loading="lazy"
-              />
-            </div>
-          </SRLWrapper> */}
         </section>
-        <div >
+        <div>
           <Gallery photos={photos} onClick={openLightbox} />
           <ModalGateway>
             {viewerIsOpen ? (
@@ -273,11 +268,30 @@ export default function Home() {
             ) : null}
           </ModalGateway>
         </div>
-       <section className='mt-10' id="ucapan">
-          <DisqusComments 
+        <section className="">
+          <button onClick={handlePauseButtonClick}>pause</button>
+          <button onClick={handlePayButtonClick}>play</button>
+
+          <div className="App">
+            <ReactHowler
+              html5={true}
+              preload
+              ref={audioRef}
+              playing={false}
+              onPlay={handlePlay}
+              onPause={handlePause}
+              onStop={handleStop}
+              onLoad={handleOnLoad}
+              onLoadError={onLoadError}
+              src={'assets/sound/Grow Old.mp3'}
+            />
+          </div>
+        </section>
+        <section className="mt-10" id="ucapan">
+          <DisqusComments
             post={{ id: 'Adhimas&Endah', title: 'Adhimas&Endah' }}
           />
-       </section>
+        </section>
       </Layout>
     </div>
   );
