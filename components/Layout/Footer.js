@@ -9,22 +9,30 @@ const Footer = () => {
     <div className=" fixed lg:hidden bottom-0 mb-1 mx-1 right-0 left-0 z-20">
       <div className="bg-dark-500 w-full px-6 rounded-full shadow border-opacity-20 border border-white">
         <ul className=" flex items-center justify-evenly text-white text-xs font-light py-2 md:py-3">
-          <li className="flex items-center font-medium  flex-col px-2 py-1">
-            <Home className="h-6 w-6 mb-1" />
-            <p>Beranda</p>
-          </li>
-          <li className="flex items-center  flex-col px-2 py-1">
-            <Calender className="h-6 w-6 mb-1" />
-            <p>Resepsi</p>
-          </li>
-          <li className="flex items-center  flex-col px-2 py-1">
-            <Gallery className="h-6 w-6 mb-1" />
-            <p>Galeri</p>
-          </li>
-          <li className="flex items-center  flex-col px-2 py-1">
-            <Chat className="h-6 w-6 mb-1" />
-            <p>Ucapan</p>
-          </li>
+          <a href="#beranda">
+            <li className="flex items-center font-medium  flex-col px-2 py-1">
+              <Home className="h-6 w-6 mb-1" />
+              <p>Beranda</p>
+            </li>
+          </a>
+          <a href='#resepsi'>
+            <li className="flex items-center  flex-col px-2 py-1">
+              <Calender className="h-6 w-6 mb-1" />
+              <p>Resepsi</p>
+            </li>
+          </a>
+          <a href="#gallery">
+            <li className="flex items-center  flex-col px-2 py-1">
+              <Gallery className="h-6 w-6 mb-1" />
+              <p>Galeri</p>
+            </li>
+          </a>
+          <a href="#ucapan">
+            <li className="flex items-center  flex-col px-2 py-1">
+              <Chat className="h-6 w-6 mb-1" />
+              <p>Ucapan</p>
+            </li>
+          </a>
         </ul>
       </div>
     </div>

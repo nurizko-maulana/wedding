@@ -1,16 +1,17 @@
 /* purgecss start ignore */
-@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Habibi&family=Montserrat:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Habibi&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 html {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  scroll-behavior: smooth;
 }
 .font-habibi {
-  font-family: "Habibi", serif;
+  font-family: 'Habibi', serif;
 }
 .font-great-vibes {
-  font-family: "Great Vibes", cursive;
+  font-family: 'Great Vibes', cursive;
 }
 .bg-blur-2px {
   filter: blur(2px);

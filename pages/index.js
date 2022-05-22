@@ -1,4 +1,6 @@
+// import Script from 'next/script'
 import Head from 'next/head';
+import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import Layout from '@/components/Layout/Layout';
 // import Resepsi from '../public/assets/icons/resepsi.svg';
@@ -6,7 +8,55 @@ import Ring from '../public/assets/icons/ring.svg';
 
 import Location from '../public/assets/icons/location.svg';
 
+import { SRLWrapper } from 'simple-react-lightbox';
+
+import Gallery from 'react-photo-gallery';
+import Carousel, { Modal, ModalGateway } from 'react-images';
+
+import DisqusComments from '@/components/DisqusComments';
+
+const photos = [
+  {
+    src: '/assets/gallery-mobile/photo-1.jpg',
+    width: 3,
+    height: 2,
+  },
+  {
+    src: '/assets/gallery-mobile/photo-2.jpg',
+    width: 3,
+    height: 1,
+  },
+  {
+    src: '/assets/gallery-mobile/photo-3.jpg',
+    width: 4,
+    height: 4,
+  },
+  {
+    src: '/assets/gallery-mobile/photo-5.jpg',
+    width: 5,
+    height: 4,
+  },
+  {
+    src: '/assets/gallery-mobile/photo-6.jpg',
+    width: 4,
+    height: 4,
+  },
+];
+
 export default function Home() {
+  const [currentImage, setCurrentImage] = useState(0);
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
+
+  const openLightbox = useCallback((event, { photo, index }) => {
+    setCurrentImage(index);
+    setViewerIsOpen(true);
+  }, []);
+
+  const closeLightbox = () => {
+    setCurrentImage(0);
+    setViewerIsOpen(false);
+  };
+
   return (
     <div>
       <Head>
@@ -17,17 +67,16 @@ export default function Home() {
         {/* Header Mobile */}
         <section
           id="beranda"
-          className="flex lg:hidden bg-cover bg-center  w-full h-screen  items-start py-14"
-          style={{ backgroundImage: 'url(/assets/prewedding-home.png)' }}
+          className="flex lg:hidden bg-cover bg-center  w-full h-screen  items-start "
+          style={{ backgroundImage: 'url(/assets/endah-138.jpg)' }}
         >
           <div className="flex flex-col  w-full relative">
-            <div className="absolute h-full w-full bg-dark-450 bg-blur-2px"></div>
+            <div className="absolute h-full w-full bg-gradient-to-b from-dark-500 to-dark-100 bg-blur-2px"></div>
             <div className="flex flex-col w-full text-white text-center h-auto  px-8 py-3.5 z-10">
-              <p className="font-habibi ">Pernikahan dari</p>
               <h4 className="font-great-vibes text-5xl mb-4 mt-6">
-                Bambang & Partini
+                Adhimas & Endah
               </h4>
-              <p className="font-habibi ">01 Januari 2021</p>
+              <p className="font-habibi -mt-4">10 Maret 2022</p>
             </div>
           </div>
         </section>
@@ -37,26 +86,28 @@ export default function Home() {
           className="hidden lg:grid bg-dark-500 py-14 lg:py-0 mb:pb-6 grid-flow-col grid-cols-2 gap-4 row-span-4 h-screen"
         >
           <div className="flex flex-col text-white px-8 pb-20 pt-28 justify-end">
-            <div className="flex flex-col text-center my-auto">
+            <div className="flex flex-col text-justify my-auto">
               <p>
-                “And of His signs is that He created for you from your selves
-                mates that you may find tranquility in them; and He placed
-                between you affection and mercy. Indeed in that are signs for a
-                people who give thought.”
+                “Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
+                pasangan-pasangan untukmu dari jenismu sendiri, agar kamu
+                cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di
+                antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian
+                itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum
+                yang berpikir.”
               </p>
               <p>( QS. Ar- Rum 21 )</p>
             </div>
             <div className="flex flex-col ">
               <p className="font-habibi">Pernikahan dari</p>
               <h4 className="font-great-vibes text-5xl mb-4 mt-6">
-                Bambang & Partini
+                Adhimas Wahyudi & Endah Sri Lestari SM
               </h4>
-              <p className="font-habibi ml-auto">01 Januari 2021</p>
+              <p className="font-habibi ml-auto"> Rabu legi, 25 Mei 2022</p>
             </div>
           </div>
           <div className="flex w-full relative">
             <Image
-              src="/assets/prewedding-home.png"
+              src="/assets/endah-138.jpg"
               alt="Picture of the author"
               layout="fill"
               objectFit="cover"
@@ -74,123 +125,159 @@ export default function Home() {
             <div className="flex flex-col w-full text-white text-center h-auto  px-8 py-3.5 z-10 lg:my-auto">
               <p className="font-habibi lg:hidden">Pernikahan dari</p>
               <h4 className="font-great-vibes text-5xl lg:text-7xl mb-4 mt-6 ">
-                Bambang & Partini
+                Adhimas & Endah
               </h4>
-              <p className="lg:hidden font-habibi ">01 Januari 2021</p>
+              <p className="lg:hidden font-habibi ">10 Maret 2022</p>
             </div>
           </div>
           <div className="flex w-full px-8 text-white font-habibi text-sm md:text-base lg:text-xl">
             <div className="flex flex-col w-1/2 text-center px-2 break-words">
-              <p>Putra dari</p>
-              <p>Bapak Badril Munir</p>
-              <p>Ibu Sartinah</p>
+              <p>Putra pertama dari</p>
+              <p>Bapak ADMO SUDIBYO</p>
+              <p>Ibu VIOLITHA NINGSIH ( ALM )</p>
             </div>
             <div className="flex flex-col w-1/2 text-center px-2 break-words ">
-              <p>Putra dari</p>
-              <p>Bapak Badril Munir</p>
-              <p>Ibu Sartinah</p>
+              <p>Putri pertama dari</p>
+              <p>Bapak JUARI RONODIKORO</p>
+              <p>Ibu SUMARNI</p>
             </div>
           </div>
           <div className="flex flex-col mx-auto h-40 lg:h-full items-center justify-center w-full px-8">
             <div className="flex flex-col md:flex-row w-full">
-              <div className="flex w-full my-2 h-16 lg:h-20 md:justify-center">
+              <div className="flex w-full justify-center my-2 h-16 lg:h-20 md:justify-center">
                 <Ring className="h-12 md:h-16 w-12 md:w-16  mr-6 my-auto" />
                 <div className="flex flex-col text-white font-habibi justify-between h-full">
                   <p className="text-base md:text-lg lg:text-3xl">
                     Akad pernikahan{' '}
                   </p>
+                  <p className="text-xs md:text-lg lg:text-3xl">
+                    Rabu legi, 25 Mei 2022
+                  </p>
                   <p className="text-xs md:text-base lg:text-lg">
-                    Pukul 08.00 s.d 10.00 WIB
+                    10:00 wib s/d selesai
                   </p>
                 </div>
               </div>
 
-              <div className="flex w-full my-2 h-16 lg:h-20 md:justify-center">
+              <div className="flex justify-center w-full my-2 h-16 lg:h-20 md:justify-center">
                 <img
                   src="/assets/icons/resepsi.svg"
                   className="h-12 md:h-16 w-12 md:w-16  mr-6 my-auto"
                 />
-                <div className="flex flex-col text-white font-habibi justify-between h-full">
+                <div className="flex flex-col text-white font-habibi justify-center h-full">
                   <p className="text-base md:text-lg lg:text-3xl">Resepsi </p>
                   <p className="text-xs md:text-base lg:text-lg">
-                    Pukul 10.00 s.d Selesai
+                    12:30 wib s/d selesai
                   </p>
                 </div>
               </div>
             </div>
-            <p className="hidden md:block mt-12 lg:mt-auto mx-auto text-lg text-white font-habibi">
-              Bertempat di mempelai wanita, Perum permata hijau Blok F no 45
-            </p>
-          </div>
-          <div className="flex mx-auto h-32 lg:h-full items-start lg:items-end justify-start w-full px-8">
-            <button className="mt-6 px-6 md:px-12 py-2 md:py-3 flex justify-center items-center border-white border rounded-l-full rounded-r-full mx-auto text-white font-habibi text-sm md:text-base">
-              <Location className="h-8 md:h-10 w-8 md:w-10 mr-4" />
-              Cek Lokasi
-            </button>
           </div>
         </section>
+        <div className="-mt-24 w-full">
+          <div className="flex flex-col mx-auto h-32 lg:h-full items-start lg:items-end justify-start w-full px-8">
+            <button className="mt-6 px-6 md:px-12 py-2 md:py-3 flex justify-center items-center border-white border rounded-l-full rounded-r-full mx-auto text-white font-habibi text-sm md:text-base">
+              <Location className="h-8 md:h-10 w-8 md:w-10 mr-4" />
+              Lokasi
+            </button>
+          </div>
+          <p className="md:block mb-5 -mt-5 lg:mt-auto mx-auto text-center text-lg text-white font-habibi">
+            Bertempat di mempelai wanita, Perum permata hijau Blok F no 45
+          </p>
+
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d368.1709704585785!2d103.39618241611362!3d1.023559793158446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d75b741c9bf92d%3A0xc6050987ce67b1b5!2sGedung%20Paguyuban%20Jawa%20Among%20Mitro!5e0!3m2!1sen!2sid!4v1649968315313!5m2!1sen!2sid"
+            width="100%"
+            height="400"
+          ></iframe>
+        </div>
         <section
           id="gallery"
-          className="bg-dark-500 pt-8 md:pt-0 lg:pt-32 pb-24 lg:pb-8 grid grid-flow-row gap-4 grid-rows-7 lg:grid-rows-5 grid-cols-2 lg:grid-cols-3 h-screen px-4 lg:px-8"
+          // className="bg-dark-500 pt-8 md:pt-0 lg:pt-32 pb-24 lg:pb-8 grid grid-flow-row gap-4 grid-rows-7 lg:grid-rows-5 grid-cols-2 lg:grid-cols-3 h-screen px-4 lg:px-8"
+          className="bg-dark-500 text-center mb-10 mt-16 pt-8 md:pt-0"
         >
           <h1 className="col-span-2  text-5xl font-great-vibes my-auto mx-auto text-white lg:hidden">
             Gallery
           </h1>
-          <div className="flex row-span-3 ">
-            <Image
-              src="/assets/gallery-mobile/photo-1.png"
-              alt="Picture of the author"
-              width={500}
-              height={500}
-              objectFit="cover"
-              quality={100}
-              loading="lazy"
-            />
-          </div>
-          <div className="flex  row-start-3 col-start-2 row-span-3 lg:row-span-5 bg-white">
-            <Image
-              src="/assets/gallery-mobile/photo-2.png"
-              alt="Picture of the author"
-              width={500}
-              height={500}
-              objectFit="cover"
-              quality={100}
-              loading="lazy"
-            />
-          </div>
-          <div className="flex row-span-1 col-start-2 lg:col-start-3 row-start-2  lg:row-span-2">
-            <Image
-              src="/assets/gallery-mobile/photo-3.png"
-              alt="Picture of the author"
-              width={500}
-              height={500}
-              objectFit="cover"
-              quality={100}
-              loading="lazy"
-            />
-          </div>
-          <div className="flex row-span-1 lg:row-span-3">
-            <Image
-              src="/assets/gallery-mobile/photo-4.png"
-              alt="Picture of the author"
-              width={500}
-              height={500}
-              objectFit="cover"
-              quality={100}
-              loading="lazy"
-            />
-          </div>
-          <div className="flex row-span-2 lg:row-span-2 col-span-2 lg:col-span-1 w-full relative">
-            <Image
-              src="/assets/gallery-mobile/photo-5.png"
-              alt="Picture of the author"
-              layout="fill"
-              objectFit="cover"
-              quality={100}
-              loading="lazy"
-            />
-          </div>
+          {/* <SRLWrapper>
+            <div className="flex row-span-4 ">
+              <Image
+                src="/assets/gallery-mobile/photo-1.jpg"
+                alt="Picture of the author"
+                width={500}
+                height={500}
+                objectFit="cover"
+                quality={100}
+                loading="lazy"
+              />
+            </div>
+            <div className="flex  row-start-5 col-start-2 row-span-4 lg:row-span-5 bg-white">
+              <Image
+                src="/assets/gallery-mobile/photo-2.jpg"
+                alt="Picture of the author"
+                width={500}
+                height={500}
+                objectFit="cover"
+                quality={100}
+                loading="lazy"
+              />
+            </div>
+            <div className="flex row-span-3 col-start-2 lg:col-start-3 row-start-2  lg:row-span-2">
+              <Image
+                src="/assets/gallery-mobile/photo-3.jpg"
+                alt="Picture of the author"
+                width={500}
+                height={500}
+                objectFit="cover"
+                quality={100}
+                loading="lazy"
+              />
+            </div>
+            <div className="flex row-span-6 lg:row-span-3">
+              <Image
+                src="/assets/gallery-mobile/photo-4.jpg"
+                alt="Picture of the author"
+                width={500}
+                height={500}
+                objectFit="cover"
+                quality={100}
+                loading="lazy"
+              />
+            </div>
+            <div className="flex row-span-9 lg:row-span-2 col-span-2 lg:col-span-1 w-full relative">
+              <Image
+                src="/assets/gallery-mobile/photo-5.jpg"
+                alt="Picture of the author"
+                layout="fill"
+                objectFit="cover"
+                quality={100}
+                loading="lazy"
+              />
+            </div>
+          </SRLWrapper> */}
         </section>
+        <div >
+          <Gallery photos={photos} onClick={openLightbox} />
+          <ModalGateway>
+            {viewerIsOpen ? (
+              <Modal onClose={closeLightbox}>
+                <Carousel
+                  currentIndex={currentImage}
+                  views={photos.map((x) => ({
+                    ...x,
+                    srcset: x.srcSet,
+                    caption: x.title,
+                  }))}
+                />
+              </Modal>
+            ) : null}
+          </ModalGateway>
+        </div>
+       <section className='mt-10' id="ucapan">
+          <DisqusComments 
+            post={{ id: 'Adhimas&Endah', title: 'Adhimas&Endah' }}
+          />
+       </section>
       </Layout>
     </div>
   );
