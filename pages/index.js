@@ -181,7 +181,7 @@ export default function Home() {
               alt="Picture of the author"
               layout="fill"
               objectFit="cover"
-              quality={100}
+              quality={50}
               loading="lazy"
             />
           </div>
@@ -285,9 +285,6 @@ export default function Home() {
           </ModalGateway>
         </div>
         <section className="">
-          <button onClick={handlePauseButtonClick}>pause</button>
-          <button onClick={handlePayButtonClick}>play</button>
-
           <div className="App">
             <ReactHowler
               html5={true}
